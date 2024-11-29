@@ -1,0 +1,19 @@
+<mat-toolbar class="toolbar-background">
+    <button mat-button *ngIf="!userService.isLogged()" routerLink="/login">LogIn</button>
+
+    <span class="example-spacer"></span>
+
+    <img src="assets/images/iris-brand.png" alt="Menu Image" class="brand">
+
+    <span class="example-spacer"></span>
+
+    <button *ngIf="userService.isLogged()" mat-button [matMenuTriggerFor]="profileMenu">Profile</button>
+    <mat-menu #profileMenu="matMenu" xPosition="after">
+        <button mat-menu-item>Account</button>
+        <button mat-menu-item (click)="logout()" >LogOut</button>
+    </mat-menu>
+
+</mat-toolbar>
+
+
+
