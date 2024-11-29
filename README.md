@@ -1,6 +1,12 @@
-# FrontEmployee
+# FrontToDoList
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.3.
+
+## Installation Docker
+
+```bash
+# Si corre con docker y quiere levantar la imagen y el contendor
+$ docker build -t to-do-list . && docker run -d -p 4201:80 to-do-list
 
 ## Development server
 
