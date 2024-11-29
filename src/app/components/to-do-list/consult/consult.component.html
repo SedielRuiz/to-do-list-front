@@ -2,22 +2,23 @@
 <h1>To do List</h1>
 
 <div class="wd-100">
-    <mat-form-field>
-        <mat-select [(ngModel)]="filter" (ngModelChange)="onFilterChange($event)" class="select-wd-100">
-            @for (item of filters; track item) {
-                <mat-option [value]="item">{{item.viewValue}}</mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
-
-    <br>
-
-    <mat-form-field class="example-form-field">
-        <input matInput placeholder="Placeholder" type="text" [(ngModel)]="description">
-        <button matSuffix mat-icon-button aria-label="Add" (click)="create()">
-            <mat-icon class="cusor-pointer">add</mat-icon>
-        </button>
-    </mat-form-field>
+    <mat-grid-list cols="4" rowHeight="2:1" class="grid-margin">
+        <mat-grid-tile colspan="4" rowspan="3">
+			<mat-form-field class="wd-100">
+				<mat-select [(ngModel)]="filter" (ngModelChange)="onFilterChange($event)">
+					@for (item of filters; track item) {
+						<mat-option [value]="item">{{item.viewValue}}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+		</mat-grid-tile>
+    </mat-grid-list>
+	<mat-form-field class="example-form-field">
+		<input matInput placeholder="Placeholder" type="text" [(ngModel)]="description">
+		<button matSuffix mat-icon-button aria-label="Add" (click)="create()">
+			<mat-icon class="cusor-pointer">add</mat-icon>
+		</button>
+	</mat-form-field>
 </div>
 
 <br>
@@ -26,17 +27,17 @@
 <div>
     <section class="example-section">
         <div *ngFor="let item of dataSource">
-            <mat-grid-list cols="2" rowHeight="2:1">
-                <mat-grid-tile cols="11">
-                    <div class="card-task wd-100">
-                        <mat-checkbox (change)="update(item, $event.checked)" [checked]="item.finish">{{item.description}}</mat-checkbox>
+            <mat-grid-list cols="5" rowHeight="2:1" class="grid-margin">
+                <mat-grid-tile class="card-task" colspan="4" rowspan="1">
+                    <div class="card-task">
+                    	<mat-checkbox (change)="update(item, $event.checked)" [checked]="item.finish">{{item.description}}</mat-checkbox>
                     </div>
                 </mat-grid-tile>
-                <mat-grid-tile cols="1">
+                <mat-grid-tile colspan="1" rowspan="1">
                     <mat-icon class="color-red cusor-pointer" (click)="delete(item.id)">clear</mat-icon>
                 </mat-grid-tile>
-              </mat-grid-list>
-        </div>
+            </mat-grid-list>
+          </div>
     </section>
 </div>
 
