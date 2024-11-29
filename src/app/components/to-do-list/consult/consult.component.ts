@@ -56,7 +56,7 @@ export class ConsultToDoListComponent implements AfterViewInit{
 
     async getToDoList(filters: object = {}){
       const response: any = await this.toDoListService.getToDoList(filters).catch((response: any) => {
-            if(response.error.statusCode == 401){
+            if(response.error?.statusCode == 401){
                 this.userService.logout()
                 this.router.navigate(['/login'])
             }
@@ -66,7 +66,14 @@ export class ConsultToDoListComponent implements AfterViewInit{
     }
 
 	async delete(id: number) {
-		await this.toDoListService.delete(id)
+		await this.toDoListService.delete(id).catch((response: any) => {
+            this.dialog.open(ErrorDialogComponent, {
+                data: {
+                    message: response.error?.message,
+                    statusCode: response.error?.statusCode
+                }
+            })
+    })
 		await this.getToDoList()
 	}
 
@@ -76,11 +83,10 @@ export class ConsultToDoListComponent implements AfterViewInit{
             await this.getToDoList()
 
         } catch (response: any) {
-            console.log(response.error.message)
             this.dialog.open(ErrorDialogComponent, {
                 data: {
-                    message: response.error.message,
-                    statusCode: response.error.statusCode
+                    message: response.error?.message,
+                    statusCode: response.error?.statusCode
                 }
             })
         }
@@ -88,21 +94,17 @@ export class ConsultToDoListComponent implements AfterViewInit{
     }
 
 	async update(toDoList: ToDoList, checked: boolean) {
-        console.log(toDoList)
-        console.log(checked)
         try {
-            const response: any = await this.toDoListService.update(toDoList.id, {
+            await this.toDoListService.update(toDoList.id, {
                 description: toDoList.description,
                 finish: checked
             })
-            console.log(response)
 
         } catch (response: any) {
-            console.log(response.error.message)
             this.dialog.open(ErrorDialogComponent, {
                 data: {
-                    message: response.error.message,
-                    statusCode: response.error.statusCode
+                    message: response.error?.message,
+                    statusCode: response.error?.statusCode
                 }
             })
         }
